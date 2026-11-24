@@ -1,21 +1,47 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useState, useSyncExternalStore } from "react";
 import { CATEGORIES } from "@/lib/domain";
 import { Notice } from "@/components/ui";
 
+const SUPPORTED_STORAGE_KEY = "yousee_supported";
+const SUPPORTED_EVENT = "yousee-supported-change";
+
+function isProposalSupported(id: string) {
+  if (typeof window === "undefined") return false;
+
+  const saved: unknown = JSON.parse(
+    window.localStorage.getItem(SUPPORTED_STORAGE_KEY) || "[]",
+  );
+  return Array.isArray(saved) && saved.includes(id);
+}
+
 export function SupportButton({ id, count }: { id: string; count: number }) {
   const [n, setN] = useState(count);
-  const [done, setDone] = useState(false);
-  useEffect(() => {
-    const s: string[] = JSON.parse(localStorage.getItem("yousee_supported") || "[]");
-    if (s.includes(id)) setDone(true);
-  }, [id]);
+  const done = useSyncExternalStore(
+    (onStoreChange) => {
+      window.addEventListener("storage", onStoreChange);
+      window.addEventListener(SUPPORTED_EVENT, onStoreChange);
+      return () => {
+        window.removeEventListener("storage", onStoreChange);
+        window.removeEventListener(SUPPORTED_EVENT, onStoreChange);
+      };
+    },
+    () => isProposalSupported(id),
+    () => false,
+  );
+
   async function support() {
     if (done) return;
-    setDone(true);
     setN((x) => x + 1);
-    const s: string[] = JSON.parse(localStorage.getItem("yousee_supported") || "[]");
-    localStorage.setItem("yousee_supported", JSON.stringify([...s, id]));
+    const saved: unknown = JSON.parse(
+      window.localStorage.getItem(SUPPORTED_STORAGE_KEY) || "[]",
+    );
+    const ids = Array.isArray(saved) ? saved.filter((value): value is string => typeof value === "string") : [];
+    window.localStorage.setItem(
+      SUPPORTED_STORAGE_KEY,
+      JSON.stringify([...new Set([...ids, id])]),
+    );
+    window.dispatchEvent(new Event(SUPPORTED_EVENT));
     await fetch("/api/proposals", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ action: "support", id }) });
   }
   return (
