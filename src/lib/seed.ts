@@ -350,12 +350,12 @@ export function ensureSeed(): Promise<void> {
 
 /** Manually issued admin credential (preview bootstrap). Never a social login account. */
 async function ensureBootstrapAdmin() {
-  await db.execute(sql`select pg_advisory_lock(424243)`);
-  try {
+  await db.transaction(async (tx) => {
+    await tx.execute(sql`select pg_advisory_xact_lock(424244)`);
     const cred = bootstrapAdminCredentials();
-    const [existing] = await db.select({ id: users.id }).from(users).where(eq(users.email, cred.email)).limit(1);
+    const [existing] = await tx.select({ id: users.id }).from(users).where(eq(users.email, cred.email)).limit(1);
     if (existing) return;
-    await db.insert(users).values({
+    await tx.insert(users).values({
       displayName: "YouSee system administrator",
       email: cred.email,
       passwordHash: hashPassword(cred.password),
@@ -367,9 +367,7 @@ async function ensureBootstrapAdmin() {
         ? "Preview bootstrap account, issued manually. Replace with ADMIN_BOOTSTRAP_* before production."
         : "Issued manually by the system operator via ADMIN_BOOTSTRAP_* environment variables.",
     });
-  } finally {
-    await db.execute(sql`select pg_advisory_unlock(424243)`);
-  }
+  });
 }
 
 async function runSeed() {
