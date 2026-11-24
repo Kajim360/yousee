@@ -14,30 +14,43 @@ export type Photo = {
   subject: string;
 };
 
-const img = (file: string) => `/images/${file.endsWith(".jpg") ? file : `${file}.jpg`}`;
+// Local source files in src/assets/images (importable in VS Code via @/assets/images).
+import {
+  cityManila,
+  cityPasig,
+  cityNight,
+  cityBaguio,
+  floodStreet,
+  floodVillage,
+  communityDialogue,
+  communityVolunteers,
+  communityTreePlanting,
+  environmentCoast,
+  environmentMangrove,
+} from "@/assets/images";
 
 export const PHOTOS: Record<string, Photo> = {
   "city-manila": {
     key: "city-manila",
-    src: img("temanggung-village.jpg"),
-    alt: "Hillside village in Temanggung, Central Java, Indonesia",
-    caption: "A hillside village in Temanggung",
-    credit: "Pexels · photo 38539723",
+    src: cityManila.src,
+    alt: "Manila skyline at sunset with warm light across the city",
+    caption: "Manila at sunset",
+    credit: "Kenneth Surillo / Pexels",
     theme: "city",
-    subject: "Indonesia",
+    subject: "Philippines",
   },
   "city-pasig": {
     key: "city-pasig",
-    src: img("mountain-village.jpg"),
-    alt: "Village rooftops with mountains in the background",
-    caption: "Rooftops in a mountain village",
-    credit: "Pexels · photo 36832138",
+    src: cityPasig.src,
+    alt: "High-rise buildings in Pasig City glowing at sunset",
+    caption: "Pasig City at sunset",
+    credit: "Jurell Celario / Pexels",
     theme: "city",
-    subject: "Regional village",
+    subject: "Philippines",
   },
   "city-night": {
     key: "city-night",
-    src: img("city-night"),
+    src: cityNight.src,
     alt: "A dense city illuminated at night seen from above",
     caption: "City lights after dark",
     credit: "Ck Lacandazo / Pexels",
@@ -46,7 +59,7 @@ export const PHOTOS: Record<string, Photo> = {
   },
   "city-baguio": {
     key: "city-baguio",
-    src: img("city-baguio"),
+    src: cityBaguio.src,
     alt: "Colourful homes built across a hillside in Baguio, Philippines",
     caption: "Hillside neighbourhood, Baguio",
     credit: "Harvey Tan Villarino / Pexels",
@@ -55,7 +68,7 @@ export const PHOTOS: Record<string, Photo> = {
   },
   "flood-street": {
     key: "flood-street",
-    src: img("flood-street"),
+    src: floodStreet.src,
     alt: "People and vehicles moving through a flooded urban street",
     caption: "A flooded street after heavy rain",
     credit: "Faisal Ibne Kalam / Pexels",
@@ -64,7 +77,7 @@ export const PHOTOS: Record<string, Photo> = {
   },
   "flood-village": {
     key: "flood-village",
-    src: img("flood-village"),
+    src: floodVillage.src,
     alt: "A residential street submerged by floodwater in a tropical community",
     caption: "Water reaching the doorstep",
     credit: "Hussain Naushad / Pexels",
@@ -73,7 +86,7 @@ export const PHOTOS: Record<string, Photo> = {
   },
   "community-dialogue": {
     key: "community-dialogue",
-    src: img("community-dialogue"),
+    src: communityDialogue.src,
     alt: "Residents talking together around a wooden table outdoors",
     caption: "A conversation between neighbours",
     credit: "Jeff Vinluan / Pexels",
@@ -82,7 +95,7 @@ export const PHOTOS: Record<string, Photo> = {
   },
   "community-volunteers": {
     key: "community-volunteers",
-    src: img("community-volunteers"),
+    src: communityVolunteers.src,
     alt: "Volunteers cleaning up a public park together",
     caption: "Residents caring for shared space",
     credit: "Galib Rahman Nadim / Pexels",
@@ -91,7 +104,7 @@ export const PHOTOS: Record<string, Photo> = {
   },
   "community-tree-planting": {
     key: "community-tree-planting",
-    src: img("community-tree-planting"),
+    src: communityTreePlanting.src,
     alt: "A group of volunteers planting young trees together",
     caption: "Planting for a cooler city",
     credit: "Tường Chopper / Pexels",
@@ -100,21 +113,21 @@ export const PHOTOS: Record<string, Photo> = {
   },
   "environment-coast": {
     key: "environment-coast",
-    src: img("coastal-mangroves.jpg"),
-    alt: "Mangrove trees framing a low-tide coastal shoreline",
-    caption: "A mangrove-lined shore",
-    credit: "Pexels · photo 28908035",
+    src: environmentCoast.src,
+    alt: "Green mountains meeting a coastline in Candijay, Philippines",
+    caption: "Coast and hills, Candijay",
+    credit: "Rodelou Tuyor / Pexels",
     theme: "environment",
-    subject: "Coastal ecosystem",
+    subject: "Philippines",
   },
   "environment-mangrove": {
     key: "environment-mangrove",
-    src: img("tanjong-sepat-mangroves.jpg"),
-    alt: "Mangrove roots and trees exposed at low tide in Tanjong Sepat, Malaysia",
-    caption: "Mangroves at low tide, Tanjong Sepat",
-    credit: "Pexels · photo 30004134",
+    src: environmentMangrove.src,
+    alt: "Mangrove roots exposed at low tide",
+    caption: "Mangroves at low tide",
+    credit: "Ihsan Adityawarman / Pexels",
     theme: "environment",
-    subject: "Malaysia",
+    subject: "Coastal environment",
   },
 };
 

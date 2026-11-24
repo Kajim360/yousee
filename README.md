@@ -74,4 +74,4 @@ DEPLOYMENT_GUIDE, CHANGELOG, DECISIONS (product/technical decisions, risks, open
 No emoji, sparkle, star, pin or icon-font glyph is rendered anywhere in the UI. Meaning is carried by words, short text badges and CSS colour dots. Enforce with `node scripts/check-no-glyphs.mjs` (add it to CI). See `docs/MEDIA_GUIDE.md`.
 
 ## Photography
-Four supplied Pexels photographs are stored locally in `public/images/` and used for the hero, village and mangrove imagery. Seven other registered photo assets for flooding, community engagement and city views are still missing and need suitable replacements. Every placement carries a caption, source credit and a disclosure that the image is illustrative regional photography, not Bandar Lampung and not evidence. See `docs/MEDIA_GUIDE.md`.
+Eleven local Pexels photographs in `public/images/` are placed systematically: a hero and three-part photo essay on the homepage, a full-width editorial band, and a consistent photo header on each main page. Every placement carries a caption, a credit and a disclosure that the image is illustrative regional photography, not Bandar Lampung and not evidence. See `docs/MEDIA_GUIDE.md`.
